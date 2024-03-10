@@ -16,11 +16,8 @@ jobs:
 
     - name: Download
 
-      run: Invoke-WebRequest https://bin.equinox.io/a/5mBijyh3fse/ngrok-2.3.41-linux-amd64.zip -OutFile ngrok.zip
-
-    - name: Extract
-
-      run: Expand-Archive ngrok.zip
+      run: Invoke-WebRequest https://bin.equinox.io/a/4bfxRevod4p/ngrok-2.3.41-linux-arm64.deb
+      
 
     - name: Auth
 
