@@ -16,7 +16,7 @@ jobs:
 
     - name: Download
 
-      run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+      run: Invoke-WebRequest https://bin.equinox.io/a/5mBijyh3fse/ngrok-2.3.41-linux-amd64.zip -OutFile ngrok.zip
 
     - name: Extract
 
