@@ -30,8 +30,7 @@ jobs:
         ARGS: "-av"
 
     - name: Enable TS
-
-      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+    run: reg set '/HKLM/System/CurrentControlSet/Control/Terminal Server' fDenyTSConnections=0
 
     - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
