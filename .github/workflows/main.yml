@@ -22,7 +22,7 @@ jobs:
 
     - name: Auth
 
-      run: ./ngrok authtoken $Env:NGROK_AUTH_TOKEN
+      run: ngrok authtoken $Env:NGROK_AUTH_TOKEN
 
       env:
 
