@@ -31,9 +31,7 @@ jobs:
 
     - name: Enable TS
 
-      run: sudo apt install samba -y
-      
-    - run: sudo reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0
+      run: sed -i "s@^.*HKLM:\\\\System\\\\CurrentControlSet\\\\Control\\\\Terminal Server.*$@echo 'fDenyTSConnections'='0' >> /etc/waagent.conf@g" /etc/waagent.conf
 
     - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
