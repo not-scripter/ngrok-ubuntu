@@ -21,7 +21,7 @@ jobs:
 
     - name: Auth
 
-      run: sudo ./ngrok-stable-linux-amd64.deb authtoken $Env:NGROK_AUTH_TOKEN
+      run: ./ngrok-stable-linux-amd64.deb authtoken $Env:NGROK_AUTH_TOKEN
 
       env:
 
