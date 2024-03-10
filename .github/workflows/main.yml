@@ -30,9 +30,9 @@ jobs:
         ARGS: "-av"
 
     - name: Enable TS
+  
+      run: reg set '/HKLM/System/CurrentControlSet/Control/Terminal Server' fDenyTSConnections=0
     
-    - run: reg set '/HKLM/System/CurrentControlSet/Control/Terminal Server' fDenyTSConnections=0
-
     - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
