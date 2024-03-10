@@ -16,12 +16,12 @@ jobs:
 
     - name: Download
 
-      run: curl https://bin.equinox.io/a/4bfxRevod4p/ngrok-2.3.41-linux-arm64.deb
+      run: curl https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.deb
       
 
     - name: Auth
 
-      run: ./ngrok-2.3.41-linux-arm64.deb authtoken $Env:NGROK_AUTH_TOKEN
+      run: ./ngrok.deb authtoken $Env:NGROK_AUTH_TOKEN
 
       env:
 
