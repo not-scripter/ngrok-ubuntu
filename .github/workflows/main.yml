@@ -1,45 +1,35 @@
 name: CI
 
-
 on: [push, workflow_dispatch]
 
-
 jobs:
-
   build:
-
-
     runs-on: ubuntu-latest
 
-
     steps:
+      - name: Download
 
-    - name: Download
+        run: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update
+      - run: sudo apt install ngrok
 
-      run: curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update
-    - run: sudo apt install ngrok
-      
+      - name: Auth
 
-    - name: Auth
+        run: ngrok authtoken $Env:NGROK_AUTH_TOKEN
 
-      run: ngrok authtoken $Env:NGROK_AUTH_TOKEN
+        env:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          ARGS: "-av"
 
-      env:
+      - name: Enable TS
 
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-        ARGS: "-av"
+        run: sed -i "s@^.*HKLM:\\\\System\\\\CurrentControlSet\\\\Control\\\\Terminal Server.*$@echo 'fDenyTSConnections'='0' >> /etc/waagent.conf@g" /etc/waagent.conf
 
-    - name: Enable TS
+      - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
-      run: sed -i "s@^.*HKLM:\\\\System\\\\CurrentControlSet\\\\Control\\\\Terminal Server.*$@echo 'fDenyTSConnections'='0' >> /etc/waagent.conf@g" /etc/waagent.conf
+      - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
 
-    - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+      - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
 
-    - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+      - name: Create Tunnel
 
-    - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
-
-    - name: Create Tunnel
-
-      run: .\ngrok\ngrok.exe tcp 3389
-      
+        run: .\ngrok\ngrok.exe tcp 3389
