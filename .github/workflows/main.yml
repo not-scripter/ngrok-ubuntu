@@ -23,6 +23,10 @@ jobs:
 
       - name: Enable TS
         run: |
+         sudo apt-get update
+         sudo add-apt-repository universe
+         sudo apt-get update
+         sudo apt-get install chntpw
          sudo chntpw -e /path/to/SYSTEM -t 0x3e 'ControlSet001\Control\Terminal Server' << EOF
          ed fDenyTSConnections
          0
