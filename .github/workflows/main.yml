@@ -16,7 +16,7 @@ jobs:
 
     - name: Download
 
-      run: sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
+      run: sudo tar xvzf https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz -C /usr/local/bin
       
 
     - name: Auth
