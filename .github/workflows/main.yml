@@ -21,7 +21,7 @@ jobs:
 
     - name: Auth
 
-      run: .\ngrok.deb authtoken $Env:NGROK_AUTH_TOKEN
+      run: ./ngrok-2.3.41-linux-arm64.deb authtoken $Env:NGROK_AUTH_TOKEN
 
       env:
 
